@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E1775D87-7C28-4EB6-B362-0A8EB784FAED</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ContactViewer</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0436A5E58C54CF5FD48687A2D2DCD14428C87AAE</key>
+		<string>https://github.com/ggalasso/ContactViewer.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ContactViewer.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0436A5E58C54CF5FD48687A2D2DCD14428C87AAE</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ggalasso/ContactViewer.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0436A5E58C54CF5FD48687A2D2DCD14428C87AAE</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0436A5E58C54CF5FD48687A2D2DCD14428C87AAE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ContactViewer</string>
+		</dict>
+	</array>
+</dict>
+</plist>

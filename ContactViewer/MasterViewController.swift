@@ -40,6 +40,8 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
+        //let documentsPath = NSSearchPathForDirectoriesInDomains(DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        //let path = NSBundle.mainBundle().pathForResource("fileName", ofType: "fileExt")
     }
 
     override func didReceiveMemoryWarning() {
@@ -99,6 +101,11 @@ class MasterViewController: UITableViewController {
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let evc = EditViewController(nibName: "EditViewController", bundle: nil)
+        self.navigationController?.pushViewController(evc, animated: true)
     }
 
 
