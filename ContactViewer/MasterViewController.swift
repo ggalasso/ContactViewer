@@ -13,6 +13,7 @@ class MasterViewController: UITableViewController {
     var detailViewController: DetailViewController? = nil
     //var objects = [AnyObject]()
     var contacts = [Contact]()
+    var fh = FileHandler()
     
 
     override func awakeFromNib() {
@@ -27,6 +28,31 @@ class MasterViewController: UITableViewController {
         contacts.append(contact1)
         contacts.append(contact2)
         contacts.append(contact3)
+        
+        var details = [[String:String]]();
+        
+        for var index = 0; index < contacts.count; ++index {
+            if index == 0{
+                details = [["name":contacts[index].name,"phone":contacts[index].phone,"title":contacts[index].title,"email":contacts[index].email,"twitterId":contacts[index].twitterId]]
+            } else {
+                details.append(["name":contacts[index].name,"phone":contacts[index].phone,"title":contacts[index].title,"email":contacts[index].email,"twitterId":contacts[index].twitterId])            }
+        }
+        
+        //for detail in details{
+        //println("\(detail)")
+        //}
+        
+        //let myData = fh.convertToJSON(details)
+        //fh.writeToFile(myData)
+        print(fh.readFromFile())
+        
+        //let data = NSJSONSerialization.dataWithJSONObject(details, options: nil, error: nil)
+        
+        //let string = NSString(data: data!, encoding: NSUTF8StringEncoding)!
+        
+        //print(string)
+        //writeToFile(string)
+        
     }
 
     override func viewDidLoad() {
@@ -42,6 +68,7 @@ class MasterViewController: UITableViewController {
         }
         //let documentsPath = NSSearchPathForDirectoriesInDomains(DocumentDirectory, .UserDomainMask, true)[0] as NSString
         //let path = NSBundle.mainBundle().pathForResource("fileName", ofType: "fileExt")
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -108,6 +135,7 @@ class MasterViewController: UITableViewController {
         self.navigationController?.pushViewController(evc, animated: true)
     }
 
+    
 
 }
 
