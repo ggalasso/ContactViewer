@@ -15,6 +15,8 @@ class Contact: NSObject {
     var email:String
     var phone:String
     var twitterId:String
+    var id:String
+    
     
     init(name:String, phone:String, title:String, email:String, twitterId:String) {
         self.name = name
@@ -22,6 +24,16 @@ class Contact: NSObject {
         self.title = title
         self.email = email
         self.twitterId = twitterId
+        self.id = NSUUID().UUIDString
+    }
+    
+    init(name:String, phone:String, title:String, email:String, twitterId:String, id:String) {
+        self.name = name
+        self.phone = phone
+        self.title = title
+        self.email = email
+        self.twitterId = twitterId
+        self.id = id
     }
     
 }

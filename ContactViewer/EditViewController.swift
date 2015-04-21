@@ -12,8 +12,13 @@ class EditViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //self.navigationItem.leftBarButtonItem = self.
+        //let backItem
         // Do any additional setup after loading the view.
+        self.navigationItem.title = "Edit"
+        //self.navigationItem.rightBarButtonItem =()
+        //var saveButton : UIBarButtonItem = UIBarButtonItem(title: "LeftButtonTitle", style: UIBarButtonItemStyle.add, target: self, action: "")
+        //self.navigationItem.rightBarButtonItem = saveBUtton
     }
 
     override func didReceiveMemoryWarning() {
