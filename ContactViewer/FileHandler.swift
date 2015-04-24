@@ -36,6 +36,7 @@ class FileHandler: NSObject {
                     var cTwitterId = lJsonArray[i].objectForKey("twitterId") as AnyObject? as String
                     //TODO Check if contact ID already exists in the ContactManager
                     var newContact = Contact(name: cName, phone: cPhone, title: cTitle, email: cEmail, twitterId: cTwitterId, id: cId)
+                    
                     cm.addContact(newContact)
                 }
                 println("Count: \(lJsonArray.count)")

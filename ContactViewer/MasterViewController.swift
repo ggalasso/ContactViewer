@@ -17,7 +17,8 @@ class MasterViewController: UITableViewController {
     var cm = ContactManager.sharedInstance
     //var contacts = ContactManager.sharedInstance.getContactArray()!
     
-
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
@@ -50,6 +51,10 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         println(fh.readFromFile())
+        if cm.contactList.count == 0 {
+            loadDefaultContacts()
+            fh.writeContactsToFile()
+        }
         
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
@@ -67,6 +72,11 @@ class MasterViewController: UITableViewController {
         //fh.writeContactsToFile()
         
 
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true);
+        self.tableView.reloadData();
     }
 
     override func didReceiveMemoryWarning() {
@@ -138,6 +148,7 @@ class MasterViewController: UITableViewController {
             //contacts.removeAtIndex(indexPath.row)
             let object = cm.getContactList()[indexPath.row] as Contact
             cm.deleteContact(object)
+            fh.writeContactsToFile()
             //cm.deleteContactById(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
@@ -150,14 +161,14 @@ class MasterViewController: UITableViewController {
         //self.navigationController?.pushViewController(evc, animated: true)
     }
 
-    /*func loadDefaultContacts() {
+    func loadDefaultContacts() {
         let contact1 = Contact(name: "Walter White", phone: "612-664-1234", title: "Chemist", email: "walt@bb.com", twitterId: "ww")
         let contact2 = Contact(name: "Skyler White", phone: "612-664-1235", title: "Mom", email: "sky@bb.com", twitterId: "skyblue")
         let contact3 = Contact(name: "Jessie Pinkman", phone: "612-664-1236", title: "Junkie", email: "jessie@bb.com", twitterId: "jp")
         cm.addContact(contact1)
         cm.addContact(contact2)
         cm.addContact(contact3)
-    }*/
+    }
 
 }
 

@@ -11,6 +11,7 @@ import UIKit
 class AddContactViewController: UIViewController {
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
     }
 
@@ -35,6 +36,8 @@ class AddContactViewController: UIViewController {
             ContactManager.sharedInstance.addContact(newContact)
             IDLabel.text = newContact.id
             NSLog("Cname: \(cName.text)")
+            var fh = FileHandler()
+            fh.writeContactsToFile()
             navigationController?.popViewControllerAnimated(true)
         } else if (cName.text == "") {
             var alert = UIAlertController(title: "Error!", message: "Name is required.", preferredStyle: UIAlertControllerStyle.Alert)

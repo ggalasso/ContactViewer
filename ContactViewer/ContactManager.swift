@@ -76,5 +76,19 @@ class ContactManager: NSObject {
     func getContactListSize() -> Int {
         return contactList.count
     }
+    
+    func updateContact(c: Contact) {
+        for contact in contactList {
+            if c.id == contact.id {
+                contact.name = c.name
+                contact.title = c.title
+                contact.phone = c.phone
+                contact.email = c.email
+                contact.twitterId = c.twitterId
+                println("Updated contact: \(contact.name)")
+                return;
+            }
+        }
+    }
 
 }
