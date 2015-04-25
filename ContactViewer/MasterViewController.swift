@@ -25,52 +25,26 @@ class MasterViewController: UITableViewController {
             self.clearsSelectionOnViewWillAppear = false
             self.preferredContentSize = CGSize(width: 320.0, height: 600.0)
         }
-
-        
-        //let contact4 = Contact(name: "Saul Goodman", phone: "612-664-1237", title: "Lawyer", email: "bettercallsaul@bb.com", twitterId: "callsaul@")
-        //cm.addContact(contact4)
-        //println("Size:" + String(cm.getContactListSize()))
-        
-        //for detail in details{
-        //println("\(detail)")
-        //}
-        //fh.writeToFile(cm.getContactList())
-        //let myData = fh.convertToJSON(cm.getContactList())
-        //fh.writeToFile(myData)
-        //print(fh.readFromFile())
-        
-        //let data = NSJSONSerialization.dataWithJSONObject(details, options: nil, error: nil)
-        
-        //let string = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-        
-        //print(string)
-        //writeToFile(string)
-        
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Read from file and print out what was read.
         println(fh.readFromFile())
+        //If the file was empty then load some default contacts for the app.
         if cm.contactList.count == 0 {
             loadDefaultContacts()
+            println("Default contacts loaded in.")
             fh.writeContactsToFile()
         }
         
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
-        //let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-        //self.navigationItem.rightBarButtonItem = addButton
-        
-        
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
-        //let documentsPath = NSSearchPathForDirectoriesInDomains(DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        //let path = NSBundle.mainBundle().pathForResource("fileName", ofType: "fileExt")
-        //fh.writeContactsToFile()
-        
 
     }
     
@@ -84,20 +58,12 @@ class MasterViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func insertNewObject(sender: AnyObject) {
-        //let evc = AddContactViewController(nibName: "AddContactViewController", bundle: nil)
-        //self.navigationController?.pushViewController(evc, animated: true)
-        
-        
-        //objects.insert(NSDate(), atIndex: 0)
-        //let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        //self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-    }
 
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
+            println("Show detail segue triggered")
             if let indexPath = self.tableView.indexPathForSelectedRow() {
                 var contacts = ContactManager.sharedInstance.getContactList()
                 let object = contacts[indexPath.row] as Contact
@@ -107,10 +73,8 @@ class MasterViewController: UITableViewController {
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
         }
-        if segue.identifier == "editView" {
-            NSLog("Edit Contact segue...")
-        }
         if segue.identifier == "showAdd" {
+            println("Show add segue triggered")
             if let indexPath = self.tableView.indexPathForSelectedRow() {
                 let controller = (segue.destinationViewController as UINavigationController).topViewController as AddContactViewController
             }
@@ -152,7 +116,7 @@ class MasterViewController: UITableViewController {
             //cm.deleteContactById(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
-        
+            println("Reached inside insert!!!")
         }
     }
     
@@ -165,9 +129,12 @@ class MasterViewController: UITableViewController {
         let contact1 = Contact(name: "Walter White", phone: "612-664-1234", title: "Chemist", email: "walt@bb.com", twitterId: "ww")
         let contact2 = Contact(name: "Skyler White", phone: "612-664-1235", title: "Mom", email: "sky@bb.com", twitterId: "skyblue")
         let contact3 = Contact(name: "Jessie Pinkman", phone: "612-664-1236", title: "Junkie", email: "jessie@bb.com", twitterId: "jp")
+        let contact4 = Contact(name: "Saul Goodman", phone: "612-664-1237", title: "Lawyer", email: "bettercallsaul@bb.com", twitterId: "callsaul@")
+        
         cm.addContact(contact1)
         cm.addContact(contact2)
         cm.addContact(contact3)
+        cm.addContact(contact4)
     }
 
 }

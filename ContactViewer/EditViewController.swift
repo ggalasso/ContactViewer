@@ -26,7 +26,7 @@ class EditViewController: UIViewController {
     func configureView() {
         if let editContact: Contact = self.editContact {
             if let label = self.editIdLabel {
-                label.text = editContact.name
+                label.text = editContact.id
                 cNameField.text = editContact.name
                 cTitleField.text = editContact.title
                 cPhoneField.text = editContact.phone
@@ -39,17 +39,11 @@ class EditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.navigationItem.leftBarButtonItem = self.
-        //let backItem
-        // Do any additional setup after loading the view.
         self.navigationItem.title = "Edit"
+        //Programatically add done button with saveContact function.
         let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "saveContact:")
         self.navigationItem.rightBarButtonItem = doneButton
-        
         self.configureView()
-        //self.navigationItem.rightBarButtonItem =()
-        //var saveButton : UIBarButtonItem = UIBarButtonItem(title: "LeftButtonTitle", style: UIBarButtonItemStyle.add, target: self, action: "")
-        //self.navigationItem.rightBarButtonItem = saveBUtton
     }
 
     override func didReceiveMemoryWarning() {
@@ -95,13 +89,13 @@ class EditViewController: UIViewController {
             //If an update was made update the contact and switch back to the detail screen.
             if(update == 1) {
                 var cm = ContactManager.sharedInstance
+                //Write the contact to file after updating it.
                 cm.updateContact(c)
                 var fh = FileHandler()
                 fh.writeContactsToFile()
                 navigationController?.popViewControllerAnimated(true)
             }
         }
-        
     }
 
     /*

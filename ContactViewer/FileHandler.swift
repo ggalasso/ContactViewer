@@ -10,44 +10,30 @@ import Foundation
 class FileHandler: NSObject {
     
     let file = "contacts.json"
-    var textRead = ""
+
     
     func readFromFile() -> String {
+        var textRead = ""
         if let dirs : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as? [String] {
             let dir = dirs[0] //documents directory
             let path = dir.stringByAppendingPathComponent(file);
-            textRead = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
+            if let fileContents = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
+                textRead = fileContents
+            }
 
         } else {
-            return "Unable to read from file."
+            return "Unable to read: file directory may not be accessible."
         }
         if(textRead != "") {
             let myData:NSData? = textRead.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
-            var jsonResult: AnyObject! = NSJSONSerialization.JSONObjectWithData(myData!, options: NSJSONReadingOptions.MutableContainers, error: nil);
-            
-            if let lJsonArray = jsonResult as? Array<AnyObject> {
-                var cm = ContactManager.sharedInstance
-                for(var i = 0; i < lJsonArray.count; i++) {
-                    var cId = lJsonArray[i].objectForKey("id")! as AnyObject? as String
-                    var cName = lJsonArray[i].objectForKey("name")! as AnyObject? as String
-                    var cEmail = lJsonArray[i].objectForKey("email") as AnyObject? as String
-                    var cTitle  = lJsonArray[i].objectForKey("title") as AnyObject? as String
-                    var cPhone = lJsonArray[i].objectForKey("phone") as AnyObject? as String
-                    var cTwitterId = lJsonArray[i].objectForKey("twitterId") as AnyObject? as String
-                    //TODO Check if contact ID already exists in the ContactManager
-                    var newContact = Contact(name: cName, phone: cPhone, title: cTitle, email: cEmail, twitterId: cTwitterId, id: cId)
-                    
-                    cm.addContact(newContact)
-                }
-                println("Count: \(lJsonArray.count)")
-            }
+            convertFromJSON(myData!)
             return textRead
         } else {
-            return "Error reading from file"
+            return "Error reading: contents of file may be empty."
         }
     }
     
-    //func writeContactsToFile (dataWrite:NSData) {
+    //Convert the contact list to JSON and write it to the file.
     func writeContactsToFile () {
         var dataWrite = convertToJSON(ContactManager.sharedInstance.getContactList())
         
@@ -61,6 +47,7 @@ class FileHandler: NSObject {
         
     }
     
+    //Convert array of contacts to JSON format.
     func convertToJSON(myContacts:[Contact]) -> NSData {
         var data = [NSDictionary]()
         var myDict = NSDictionary()
@@ -78,26 +65,36 @@ class FileHandler: NSObject {
         }
         var error = NSError?()
         var tmpJSON = NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions.allZeros, error: &error)!
+        //Used for debugging
         //let str = NSString(data: tmpJSON, encoding:NSUTF8StringEncoding)!
         //println(str)
         return tmpJSON
     }
     
-    func convertFromJSON(jsonString:NSString) {
-    /*    //let responseList = NSJSONSerialization.dataWithJSONObject(Contact, options: , error: NSErrorPointer) as NSDictionary
+    
+    //Function to convert JSON list to Contact objects and add them with the Contact Manager.
+    func convertFromJSON(myData:NSData) {
         
-        // convert String to NSData
-        var data: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
-        var error: NSError?
+        var jsonResult: AnyObject! = NSJSONSerialization.JSONObjectWithData(myData, options: NSJSONReadingOptions.MutableContainers, error: nil);
         
-        // convert NSData to 'AnyObject'
-        let anyObj: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0),
-            error: &error)
-        println("Error: \(error)")
-        
-        // convert 'AnyObject' to Array<Business>
-        //list = self.parseJson(anyObj!)
-    */
+        if let lJsonArray = jsonResult as? Array<AnyObject> {
+            var cm = ContactManager.sharedInstance
+            //Loop through each contact read in and add them to the Contact Manager.
+            for(var i = 0; i < lJsonArray.count; i++) {
+                var cId = lJsonArray[i].objectForKey("id")! as AnyObject? as String
+                var cName = lJsonArray[i].objectForKey("name")! as AnyObject? as String
+                var cEmail = lJsonArray[i].objectForKey("email") as AnyObject? as String
+                var cTitle  = lJsonArray[i].objectForKey("title") as AnyObject? as String
+                var cPhone = lJsonArray[i].objectForKey("phone") as AnyObject? as String
+                var cTwitterId = lJsonArray[i].objectForKey("twitterId") as AnyObject? as String
+                //TODO Check if contact ID already exists in the ContactManager
+                //Since we re only reading in on the initial load we don't need to verify if the contact already exists by ID.
+                var newContact = Contact(name: cName, phone: cPhone, title: cTitle, email: cEmail, twitterId: cTwitterId, id: cId)
+                cm.addContact(newContact)
+            }
+            //Debugging number of contacts read in through the file.
+            println("Contact count: \(lJsonArray.count)")
+        }
         
     }
     

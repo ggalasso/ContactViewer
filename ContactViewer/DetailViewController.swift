@@ -11,18 +11,13 @@ import UIKit
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
-    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var twitterLabel: UILabel!
 
-    
-    
-    
     var contactID:String = ""
-    var myContact:Contact?
     
     var detailItem: Contact? {
         didSet {
@@ -37,34 +32,17 @@ class DetailViewController: UIViewController {
             if let label = self.detailDescriptionLabel {
                 label.text = detail.id
                 nameLabel.text = detail.name
-                if (detail.title == "") {
-                    titleLabel.text = ""
-                } else {
-                    titleLabel.text = detail.title
-                }
-                if (detail.phone == "") {
-                    phoneLabel.text = ""
-                } else {
-                    phoneLabel.text = detail.phone
-                }
-                if (detail.email == "") {
-                    emailLabel.text = ""
-                } else {
-                    emailLabel.text = detail.email
-                }
-                if (detail.twitterId == "") {
-                    twitterLabel.text = ""
-                } else {
-                    twitterLabel.text = detail.twitterId
-                }
+                titleLabel.text = detail.title
+                phoneLabel.text = detail.phone
+                emailLabel.text = detail.email
+                twitterLabel.text = detail.twitterId
             }
             contactID = detail.id
-            println("Contact ID is: \(contactID)")
-            myContact = detail
         }
 
     }
 
+    //Update the view if any data changed from the edit screen.
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         self.configureView()
@@ -89,11 +67,8 @@ class DetailViewController: UIViewController {
             println("Edit view controller segue triggered!")
             println("Contact ID is: \(contactID)")
             let controller = segue.destinationViewController as EditViewController
-            //let controller = (segue.destinationViewController as UINavigationController).topViewController as EditViewController
             
-            controller.editContact = myContact
-            //controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
-            //controller.navigationItem.leftItemsSupplementBackButton = true
+            controller.editContact = detailItem
         }
     }
     
